@@ -76,16 +76,16 @@ String Packet::TwoByteHex(unsigned long Character, bool Sign) {
 
 String Packet::FromPointerData(short int _Para[], char _SubSystem) {
     if(_SubSystem == 0)
-        return OneByteHex(_Para[0]);
+        return OneByteHex(_Para[0], true);
     else if(_SubSystem == 1)
-        return OneByteHex(_Para[0]) + OneByteHex(_Para[1]) + OneByteHex(_Para[2]);
-    return OneByteHex(_Para[0]);
+        return OneByteHex(_Para[0], true) + OneByteHex(_Para[1], true) + OneByteHex(_Para[2], true);
+    return OneByteHex(_Para[0], true);
 }
 
 String Packet::ReturnResponsePacket() {
     short int _Para[ Temperature.NumberofReturnValues(_SubSystem) ];
     Temperature.getSensorData(_SubSystem, _Command, _Para);
-    String tempString = "gz" + OneByteHex(PacketSize(Temperature.NumberofBytes(_SubSystem))) + OneByteHex(_SubSystem) + OneByteHex(_Command) + FromPointerData(_Para, _SubSystem) + TwoByteHex( RoundTimer(millis() - _PlanTimer) ) + "gz";
+    String tempString = "gz" + OneByteHex(PacketSize(Temperature.NumberofBytes(_SubSystem)) , false) + OneByteHex(_SubSystem, false) + OneByteHex(_Command, false) + FromPointerData(_Para, _SubSystem) + TwoByteHex( RoundTimer(millis() - _PlanTimer), false ) + "gz";
     //Packet Composed of SysSystem (1 byte) , Command (1 byte) , and Sensor Value (2 bytes);
     return tempString;
 }

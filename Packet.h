@@ -68,8 +68,8 @@ class Packet {
         unsigned char HexToDecimal(unsigned char X, unsigned char Y);
         int PacketSize(unsigned char SLen);
         unsigned long RoundTimer(unsigned long timer);
-        String OneByteHex(short int Character, , bool Sign);
-        String TwoByteHex(unsigned long Character, , bool Sign);
+        String OneByteHex(short int Character, bool Sign);
+        String TwoByteHex(unsigned long Character, bool Sign);
         String ThreeByteHex(short int Character);
         String FromPointerData(short int _Para[], char _SubSystem);
         String ReturnResponsePacket();
