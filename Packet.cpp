@@ -47,7 +47,7 @@ unsigned char Packet::HexToDecimal(unsigned char X,unsigned char Y) {
 String Packet::OneByteHex(short int Character, bool Sign) {
     if(Character == -9999)
         return "00";
-    if(Character > 254)
+    if(Character > 255)
         return "FF";
     if(Sign) {
         if(Character < 0) {
@@ -62,8 +62,8 @@ String Packet::OneByteHex(short int Character, bool Sign) {
 String Packet::TwoByteHex(unsigned long Character, bool Sign) {
     if(Character == -9999)
         return "00";
-    if(Character > 254)
-        return "FF";
+    if(Character > 65535)
+        return "FFFF";
     if(Sign) {
         if(Character < 0) {
             Character *= -1;
@@ -91,7 +91,7 @@ String Packet::ReturnResponsePacket() {
 }
 
 int Packet::PacketSize(unsigned char SLen) {
-    return SLen * 2 + 4 + 2 * 5;
+    return SLen * 2 + 4 + 5 * 2;
 }
 
 unsigned long Packet::RoundTimer(unsigned long timer) {
@@ -102,8 +102,8 @@ unsigned long Packet::RoundTimer(unsigned long timer) {
 
 //Public
 bool Packet::CheckPacket() {
-    //ADD ONE BECAUSE INPUT '\n' IS SEND AND INCREASE STRING SIZE BY ONE.
-    return (_Packet[0] == _Packet[10] & _Packet[1] == _Packet[11] & _Packet.length() == 14) ;
+    //ADD ONE BECAUSE INPUT '\n' IS SEND AND INCREASE STRING SIZE BY ONE.  gz01020502gzgz01020502gz
+    return (_Packet[0] == _Packet[10] & _Packet[1] == _Packet[11] & _Packet.length() == 13) ;
 }
 
 void Packet::Split() {
