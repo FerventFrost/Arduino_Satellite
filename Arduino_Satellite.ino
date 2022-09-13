@@ -23,7 +23,7 @@ void loop() {
   // Delay is here to load all the program.
   delay(2000);
   if(Serial.available() > 0) {
-    Serila.readBytes(StartSession, 6);
+    Serial.readBytes(StartSession, 6);
     ss = Serial.readString();
     Plan P(ss, SessionLen(StartSession[2], StartSession[3]) );
     delay(1000);
