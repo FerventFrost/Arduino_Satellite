@@ -2,18 +2,30 @@
 
 #include "Packet.h"
 String ss;
+char StartSession[6];
 void setup() {
   // put your setup code here, to run once:
    Serial.begin(19200);
+   Serial.setTimeout(3000);
 }
 
+char HexValue(char Hex) {          //can be short int "Takes 2 bytes"
+    if(isdigit(Hex)) return (Hex - 48);
+    else if(islower(Hex)) return (Hex - 87);
+    else return (Hex - 55);
+}
+
+int SessionLen(char Number1, char Number2) {
+  return HexValue(Number1) * 16 + HexValue(Number2);
+}
 void loop() {
   // put your main code here, to run repeatedly:
   // Delay is here to load all the program.
   delay(2000);
   if(Serial.available() > 0) {
+    Serila.readBytes(StartSession, 6);
     ss = Serial.readString();
-    Plan P(ss, 2);
+    Plan P(ss, SessionLen(StartSession[2], StartSession[3]) );
     delay(1000);
   }
 }
