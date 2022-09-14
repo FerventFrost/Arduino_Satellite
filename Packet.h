@@ -7,7 +7,6 @@
 #define DHTPIN 2
 #define DHTTYPE DHT11
 
-typedef float (*ArrayofFunctions) (bool S, bool force);
 
 
 //class Setup
@@ -52,6 +51,7 @@ class SetupSensors {
 class Packet {
     private:
         SetupSensors Temperature;
+        SetupSensors _Sensors;
         String _Packet;
         String _PacketACK;
         unsigned long _PlanTimer;
@@ -76,7 +76,7 @@ class Packet {
         String ReturnResponsePacket();
 
     public:
-        Packet(String Packet, unsigned long PlanTimer, unsigned char PacketNumber);
+        Packet(String Packet, unsigned long PlanTimer, unsigned char PacketNumber, SetupSensors &Sesnors);
         Packet();
         
         bool CheckPacket();
@@ -97,14 +97,17 @@ class Packet {
 class Plan {
     private:
         Packet * _Packets;
+        SetupSensors _Sensors;
         String _Plan;
         String _PlanAck;
         bool * _PacketSuccessfullySend;
         unsigned long _StartPlanTimer;
         unsigned char _NumberOfPackets;
     public:
-        Plan(String Plan, unsigned char NoPackets);
+        Plan();
         void Split();
+        void StartPlan(String Plan, unsigned char NoPackets);
+        void SensorsBegin();
         bool CheckPlan();
 
         Packet getPacketNumber(char No) { return _Packets[No]; }

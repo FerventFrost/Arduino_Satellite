@@ -2,7 +2,9 @@
 
 //Plan cLass
 
-Plan::Plan(String Plan, unsigned char NoPackets) {
+Plan::Plan() { }
+
+void Plan::StartPlan(String Plan, unsigned char NoPackets) {
     _StartPlanTimer = millis();
     _Plan = Plan;
     _NumberOfPackets = NoPackets;
@@ -23,7 +25,7 @@ Plan::Plan(String Plan, unsigned char NoPackets) {
 
 void Plan::Split() {
     for(int i = 0; i < _NumberOfPackets; i++) {
-        _Packets[i] = Packet(_Plan.substring(0 + (i * 12) , 12 + (i * 12)) +"\n", _StartPlanTimer, (i+1) ); //gz0100030Agz
+        _Packets[i] = Packet(_Plan.substring(0 + (i * 12) , 12 + (i * 12)) +"\n", _StartPlanTimer, (i+1), _Sensors ); //gz0100030Agz
 
         if(_Packets[i].CheckPacket()) 
             _PacketSuccessfullySend[i] = true;
@@ -32,6 +34,12 @@ void Plan::Split() {
 
         delay(1000);
     }
+}
+
+void Plan::SensorsBegin() {
+    _Sensors.DhtBegin();
+    _Sensors.MpuBegin();
+    _Sensors.HcSrBegin();
 }
 
 bool Plan::CheckPlan() {

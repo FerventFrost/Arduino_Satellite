@@ -2,8 +2,6 @@
 
 
 SetupSensors::SetupSensors():dht(DHTPIN ,DHTTYPE) {
-  DhtBegin();
-  MpuBegin();
   InitArray();
 }
 //DHT 11 Sensor
@@ -144,5 +142,3 @@ void SetupSensors::InitArray() {
 char SetupSensors::NumberofBytes(char _SubSystem) { return _SensorsDefaultBytes[_SubSystem]; }
 
 char SetupSensors::NumberofReturnValues(char _SubSystem) { return _NumberofReturnValue[_SubSystem]; }
-// float SetupSensors::DhtTempFloat() { return dht.readTemperature(); }
-// void SetupSensors::PrintTemp() { Serial.println((SensorsArray[0][0](false,false))); }

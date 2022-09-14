@@ -3,10 +3,11 @@
 //Packet Class
 
 //Packet Constructor
-Packet::Packet(String Packet, unsigned long PlanTimer, unsigned char PacketNumber) {
+Packet::Packet(String Packet, unsigned long PlanTimer, unsigned char PacketNumber, SetupSensors &Sesnors) {
     _Packet = Packet;
     _PlanTimer = PlanTimer;
     _PacketNumber = PacketNumber;
+    _Sensors = Sesnors;
     if(CheckPacket()) {
         Split();
         //Split ACK
@@ -86,9 +87,9 @@ String Packet::FromPointerData(short int _Para[], char _SubSystem) {
 }
 
 String Packet::ReturnResponsePacket() {
-    short int _Para[ Temperature.NumberofReturnValues(_SubSystem) ];
-    Temperature.getSensorData(_SubSystem, _Command, _Para);
-    String tempString = "gz" + OneByteHex(PacketSize(Temperature.NumberofBytes(_SubSystem)) , false) + OneByteHex(_SubSystem, false) + OneByteHex(_Command, false) + FromPointerData(_Para, _SubSystem) + TwoByteHex( RoundTimer(millis() - _PlanTimer), false ) + "gz";
+    short int _Para[ _Sensors.NumberofReturnValues(_SubSystem) ];
+    _Sensors.getSensorData(_SubSystem, _Command, _Para);
+    String tempString = "gz" + OneByteHex(PacketSize(_Sensors.NumberofBytes(_SubSystem)) , false) + OneByteHex(_SubSystem, false) + OneByteHex(_Command, false) + FromPointerData(_Para, _SubSystem) + TwoByteHex( RoundTimer(millis() - _PlanTimer), false ) + "gz";
     //Packet Composed of SysSystem (1 byte) , Command (1 byte) , and Sensor Value (2 bytes);
     return tempString;
 }
