@@ -23,7 +23,7 @@ Plan::Plan(String Plan, unsigned char NoPackets) {
 
 void Plan::Split() {
     for(int i = 0; i < _NumberOfPackets; i++) {
-        _Packets[i] = Packet(_Plan.substring(0 + (i * 12) , 12 + (i * 12)) +"\n", _StartPlanTimer); //gz0100030Agz
+        _Packets[i] = Packet(_Plan.substring(0 + (i * 12) , 12 + (i * 12)) +"\n", _StartPlanTimer, (i+1) ); //gz0100030Agz
 
         if(_Packets[i].CheckPacket()) 
             _PacketSuccessfullySend[i] = true;

@@ -57,6 +57,7 @@ class Packet {
         unsigned long _PlanTimer;
         // unsigned char _Source;
         // unsigned char _Destination;
+        unsigned char _PacketNumber;
         unsigned char _SubSystem;
         unsigned char _Command;
         unsigned char _Repeat;
@@ -75,7 +76,7 @@ class Packet {
         String ReturnResponsePacket();
 
     public:
-        Packet(String Packet, unsigned long PlanTimer);
+        Packet(String Packet, unsigned long PlanTimer, unsigned char PacketNumber);
         Packet();
         
         bool CheckPacket();

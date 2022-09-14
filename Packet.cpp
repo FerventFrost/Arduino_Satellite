@@ -3,23 +3,26 @@
 //Packet Class
 
 //Packet Constructor
-Packet::Packet(String Packet, unsigned long PlanTimer) {
+Packet::Packet(String Packet, unsigned long PlanTimer, unsigned char PacketNumber) {
     _Packet = Packet;
     _PlanTimer = PlanTimer;
+    _PacketNumber = PacketNumber;
     if(CheckPacket()) {
         Split();
         //Split ACK
-        Serial.println("gz0002gz");
+        Serial.print("gz0002");
+        Serial.print(OneByteHex(_PacketNumber, false));
+        Serial.println("gz");
         //delay After the Pervious Packet is finished
         delay(_Delay * 1000);
         RepeatCommand();
         delay(1000);
         //ACK Packet 
-        _PacketACK = "gz0000gz";
+        _PacketACK = "gz0000" + OneByteHex(_PacketNumber, false) + "gz";
     }
     else
         //Non-Ack Packet
-        _PacketACK = "gz0001gz";
+        _PacketACK = "gz0001" + OneByteHex(_PacketNumber, false) + "gz";
 
     //Print ACK
     Serial.println(_PacketACK);
