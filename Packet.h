@@ -50,7 +50,6 @@ class SetupSensors {
 //Packet Class
 class Packet {
     private:
-        SetupSensors Temperature;
         SetupSensors _Sensors;
         String _Packet;
         String _PacketACK;

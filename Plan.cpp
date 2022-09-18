@@ -3,6 +3,11 @@
 //Plan cLass
 
 Plan::Plan() { }
+// Plan::~Plan() {
+//     delete _Packets;
+//     delete _PlanAck;
+//     delete _Plan;
+// }
 
 void Plan::StartPlan(String Plan, unsigned char NoPackets) {
     _StartPlanTimer = millis();
